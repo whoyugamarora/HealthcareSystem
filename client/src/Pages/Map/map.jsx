@@ -4,8 +4,9 @@ import 'leaflet/dist/leaflet.css';
 import HomeNavbar from "../../Components/Navbar/HomeNavbar";
 import { hospital, childcare, dentist, family, defaultpin } from "../../Components/map/icons";
 import axios from "axios";
+import Navbar from "../../Components/Navbar/Navbar";
 
-const Map = () => {
+const Map = ({user}) => {
     const [userLocation, setUserLocation] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResult, setSearchResult] = useState(null); // State for the search result
@@ -80,7 +81,7 @@ const Map = () => {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <HomeNavbar />
+            { user ? <Navbar /> : <HomeNavbar /> }
             <div className="bg-indigo-600 flex items-center flex-col justify-center flex-grow text-white font-medium px-8 md:flex-row md:justify-evenly">
                 <div className="p-4 mt-4 flex-grow w-full md:w-1/2 md:mt-0">
                     <h1 className="text-2xl my-5 font-extrabold sm:text-4xl">Search for Locations:</h1>

@@ -4,7 +4,7 @@ const HomeNavbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <nav className="bg-indigo-600 p-4 ">
+        <nav className="bg-indigo-600 p-4">
             <div className="container mx-auto flex justify-between items-center w-full">
                 <div className="text-white">
                     <h1 className="text-2xl font-bold hover:text-gray-300"><a href="/">HealthCare</a></h1>
