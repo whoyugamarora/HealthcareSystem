@@ -27,11 +27,11 @@ const AddLocation = () => {
             // Determine which criteria to use for deletion
             let url = '';
             if (deleteCriteria.id) {
-                url = `http://localhost:5000/map/locations/id/${deleteCriteria.id}`;
+                url = `http://localhost:5000/locations/id/${deleteCriteria.id}`;
             } else if (deleteCriteria.name) {
-                url = `http://localhost:5000/map/locations/name/${deleteCriteria.name}`;
+                url = `http://localhost:5000/locations/name/${deleteCriteria.name}`;
             } else if (deleteCriteria.latitude && deleteCriteria.longitude) {
-                url = `http://localhost:5000/map/locations/coords`;
+                url = `http://localhost:5000/locations/coords`;
             } else {
                 alert('Please provide either an ID, Name, or both Latitude and Longitude.');
                 return;

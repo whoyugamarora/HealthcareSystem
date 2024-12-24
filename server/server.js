@@ -3,6 +3,7 @@ const express = require('express'); // ExpressJS routing dependency
 const mongoose = require('mongoose');
 require('dotenv').config();
 const LocationRoutes = require('./routes/LocationRoutes')
+const AppointmentRoutes = require('./routes/AppointmentRoutes');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 
 // API routes for photos
 app.use('/locations', LocationRoutes);
+app.use("/appointments", AppointmentRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

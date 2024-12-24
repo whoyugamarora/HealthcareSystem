@@ -8,7 +8,7 @@ const Navbar = () => {
         <nav className="bg-indigo-600 p-4 ">
             <div className="container mx-auto flex justify-between items-center w-full">
                 <div className="text-white">
-                    <h1 className="text-2xl font-bold hover:text-gray-300"><a href="/">HealthCare</a></h1>
+                    <h1 className="text-2xl font-bold hover:text-gray-300"><a href="/dashboard">HealthCare</a></h1>
                 </div>
                 <ul className="hidden md:flex text-gray-100 flex space-x-10 font-medium">
                     <li className="hover:text-gray-300"><a href="/dashboard">Dashboard</a></li>
@@ -17,7 +17,7 @@ const Navbar = () => {
                     <li className="hover:text-gray-300"><a href="/appointments">Appointments</a></li>
                 </ul>
                 <div className="hidden md:flex text-gray-100 flex space-x-6 font-medium">
-                    <p className="hover:text-gray-300"><a href="/account">Account</a></p>
+                    <p className="hover:text-gray-300"><a href="/profile">Profile</a></p>
                     <p className="hover:text-gray-300"><a href="/" onClick={() => auth.signOut()}>Sign Out</a></p>
                 </div>
 
@@ -53,7 +53,7 @@ const Navbar = () => {
                         <li className="hover:text-gray-300"><a href="/appointments">Appointments</a></li>
                     </ul>
                     <div className="mt-10 text-gray-100 space-y-10 font-medium">
-                        <p className="hover:text-gray-300"><a href="/account">Account</a></p>
+                        <p className="hover:text-gray-300"><a href="/profile">Profile</a></p>
                         <p className="hover:text-gray-300"><a href="/" onClick={() => auth.signOut()}>Sign Out</a></p>
                     </div>
                 </div>

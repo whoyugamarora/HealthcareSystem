@@ -9,7 +9,6 @@ import Navbar from "../../Components/Navbar/Navbar";
 const Map = ({user}) => {
     const [userLocation, setUserLocation] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
-    const [searchResult, setSearchResult] = useState(null); // State for the search result
     const [locations, setLocations] = useState([]); // All locations fetched from the backend
     const [filteredLocations, setFilteredLocations] = useState([]); // Locations filtered by search query
     const defaultcoordinates = [49.049999, -122.316666];

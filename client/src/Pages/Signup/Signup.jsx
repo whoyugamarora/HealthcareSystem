@@ -41,7 +41,7 @@ const Signup = () => {
         <div>
             <HomeNavbar />
             <div
-                className="flex items-center justify-center bg-gray-100"
+                className="flex items-center justify-center bg-gray-100 px-4 md:px-0"
                 style={{ height: "calc(100vh - 4rem)" }}
             >
                 <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
