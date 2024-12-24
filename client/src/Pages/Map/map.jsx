@@ -5,8 +5,10 @@ import HomeNavbar from "../../Components/Navbar/HomeNavbar";
 import { hospital, childcare, dentist, family, defaultpin } from "../../Components/map/icons";
 import axios from "axios";
 import Navbar from "../../Components/Navbar/Navbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarCheck } from "@fortawesome/free-regular-svg-icons";
 
-const Map = ({user}) => {
+const Map = ({ user }) => {
     const [userLocation, setUserLocation] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [locations, setLocations] = useState([]); // All locations fetched from the backend
@@ -80,7 +82,7 @@ const Map = ({user}) => {
 
     return (
         <div className="min-h-screen flex flex-col">
-            { user ? <Navbar /> : <HomeNavbar /> }
+            {user ? <Navbar /> : <HomeNavbar />}
             <div className="bg-indigo-600 flex items-center flex-col justify-center flex-grow text-white font-medium px-8 md:flex-row md:justify-evenly">
                 <div className="p-4 mt-4 flex-grow w-full md:w-1/2 md:mt-0">
                     <h1 className="text-2xl my-5 font-extrabold sm:text-4xl">Search for Locations:</h1>
@@ -116,6 +118,7 @@ const Map = ({user}) => {
                                     >
                                         {location.phone ? `Call: ${location.phone}` : "No Phone Available"}
                                     </button>
+                                    <a href="/appointments"><button className="mt-2 w-full py-2 rounded-md text-white bg-indigo-500 hover:bg-indigo-700"><FontAwesomeIcon icon={faCalendarCheck} /> Book Online</button></a>
                                 </li>
                             ))}
                         </ul>
@@ -151,17 +154,19 @@ const Map = ({user}) => {
                         >
                             <Popup>
                                 <div>
-                                <h1 className="text-xl text-center font-bold text-indigo-800">{location.name}</h1>
-                                <p className="text-center text-md font-semibold">{location.type}, {location.city}</p>
-                                <p className="text-gray-800 text-xs text-center font-medium">{location.description || 'No additional information.'}</p>
-                                <button
-                                    className={`w-full py-2 text-white rounded-md ${location.phone ? "bg-indigo-500 hover:bg-indigo-800" : "bg-gray-800"
-                                        }`}
-                                    onClick={() => location.phone && window.open(`tel:${location.phone}`, "_self")}
-                                    disabled={!location.phone}
-                                >
-                                    {location.phone ? `Call: ${location.phone}` : "No Phone Available"}
-                                </button></div>
+                                    <h1 className="text-xl text-center font-bold text-indigo-800">{location.name}</h1>
+                                    <p className="text-center text-md font-semibold">{location.type}, {location.city}</p>
+                                    <p className="text-gray-800 text-xs text-center font-medium">{location.description || 'No additional information.'}</p>
+                                    <button
+                                        className={`w-full py-2 text-white rounded-md ${location.phone ? "bg-indigo-500 hover:bg-indigo-800" : "bg-gray-800"
+                                            }`}
+                                        onClick={() => location.phone && window.open(`tel:${location.phone}`, "_self")}
+                                        disabled={!location.phone}
+                                    >
+                                        {location.phone ? `Call: ${location.phone}` : "No Phone Available"}
+                                    </button>
+                                    <a href="/appointments"><button className="mt-2 w-full py-2 rounded-md text-white bg-indigo-500 hover:bg-indigo-700"><FontAwesomeIcon icon={faCalendarCheck} /> Book Online</button></a>
+                                </div>
                             </Popup>
                         </Marker>
                     ))}
