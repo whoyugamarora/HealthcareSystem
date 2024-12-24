@@ -12,44 +12,42 @@ const Appointments = ({ user }) => {
     const [time, setTime] = useState("");
     const [error, setError] = useState("");
 
+    const fetchLocations = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/locations");
+            setLocations(response.data);
+        } catch (err) {
+            console.error("Error fetching locations:", err.message);
+        }
+    };
+
+    // Fetch user appointments
+    const fetchAppointments = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/appointments`);
+
+            // Filter the appointments directly from the fetched data
+            const filteredData = response.data.filter(
+                (appointment) => appointment.userId === user.uid
+            );
+
+            const upcomingAppointments = filteredData.filter((appointment) => new Date(appointment.date) > new Date());
+
+
+            // Update states after filtering
+            setfilteredAppointments(upcomingAppointments);
+            setAppointments(response.data);
+
+        } catch (err) {
+            console.error("Error fetching appointments:", err.message);
+        }
+    };
+
     useEffect(() => {
-        // Fetch locations from the backend
-        const fetchLocations = async () => {
-            try {
-                const response = await axios.get("http://localhost:5000/locations");
-                setLocations(response.data);
-                console.log("Data Fetched: Locations");
-                console.log(user.uid);
-            } catch (err) {
-                console.error("Error fetching locations:", err.message);
-            }
-        };
-
-        // Fetch user appointments
-        const fetchAppointments = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5000/appointments`);
-                console.log(response.data); // Log the fetched data
-
-                // Filter the appointments directly from the fetched data
-                const filteredData = response.data.filter(
-                    (appointment) => appointment.userId === user.uid
-                );
-
-                console.log(filteredData); // Log the filtered data
-
-                // Update states after filtering
-                setfilteredAppointments(filteredData);
-                setAppointments(response.data);
-
-            } catch (err) {
-                console.error("Error fetching appointments:", err.message);
-            }
-        };
-
         fetchLocations();
         fetchAppointments();
-    }, [user.uid]);
+    }, []);
+
 
     const handleBookAppointment = async (e) => {
         e.preventDefault();
@@ -147,7 +145,7 @@ const Appointments = ({ user }) => {
                 <div className="w-full md:w-1/2 mt-6 ml-0 md:ml-2 md:mt-0">
                     <h2 className="text-xl md:text-2xl font-bold mb-6">Your Upcoming Appointments</h2>
                     {filteredAppointments.length > 0 ? (
-                        <ul className="space-y-4 lg:space-y-0 grid grid-cols-1 lg:grid-cols-2 gap-5 rounded-lg shadow-sm ">
+                        <ul className="space-y-4 lg:space-y-0 grid grid-cols-1 lg:grid-cols-2 gap-5 rounded-lg">
                             {filteredAppointments.map((appointment, index) => (
                                 <li
                                     key={index}

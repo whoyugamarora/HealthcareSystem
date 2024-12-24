@@ -14,7 +14,7 @@ const Dashboard = ({ user }) => {
         <div className="min-h-screen flex flex-col">
             <Navbar />
             <div className="w-full flex flex-col flex-grow">
-                <header className="bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 text-white h-[250px] md:h-[400px] flex flex-col-reverse md:flex-row items-center justify-around">
+                <header className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 text-white h-[250px] md:h-[400px] flex flex-col-reverse md:flex-row items-center justify-around">
                     <h1 className="text-2xl md:text-3xl font-bold pb-3 md:pb-3">Welcome back, {user?.displayName || "User"}!</h1>
                     <img src={avatarUrl} className="w-44 h-44 md:w-48 md:h-48 rounded-full shadow-lg border-4 border-indigo-800"/>
                 </header>
