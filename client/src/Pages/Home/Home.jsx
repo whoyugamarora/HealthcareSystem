@@ -1,5 +1,7 @@
 import React from "react";
 import HomeNavbar from "../../Components/Navbar/HomeNavbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarCheck, faCheck, faCheckCircle, faCheckDouble, faSearch, faTicket } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
     return (
@@ -46,14 +48,17 @@ const Home = () => {
                         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-20 text-indigo-800">How It Works</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                             <div className="py-20 px-5">
+                                <FontAwesomeIcon icon={faSearch} size="2xl" className="mb-4" />
                                 <h3 className="text-3xl font-extrabold mb-4">1. Search</h3>
                                 <p>Use our powerful search tool to find healthcare facilities and services.</p>
                             </div>
                             <div className="py-20 px-5">
+                                <FontAwesomeIcon icon={faCalendarCheck} size="2xl" className="mb-4" />
                                 <h3 className="text-3xl font-extrabold mb-4">2. Book</h3>
                                 <p>Pick a facility and book an appointment directly through the platform.</p>
                             </div>
                             <div className="py-20 px-5">
+                                <FontAwesomeIcon icon={faCheckCircle} size="2xl" className="mb-4" />
                                 <h3 className="text-3xl font-extrabold mb-4">3. Confirm</h3>
                                 <p>Receive confirmation and reminders to stay on top of your schedule.</p>
                             </div>

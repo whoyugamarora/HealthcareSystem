@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "../../Components/Navbar/Navbar";
 import HomeNavbar from "../../Components/Navbar/HomeNavbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const Appointments = ({ user }) => {
     const [locations, setLocations] = useState([]);
@@ -84,6 +86,13 @@ const Appointments = ({ user }) => {
         }
     };
 
+    const handleGetDirections = (locationName) => {
+        // Generate a Google Maps URL with the location name
+        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(locationName)}`;
+        console.log(googleMapsUrl);
+        window.open(googleMapsUrl, "_blank"); // Open the URL in a new tab
+    };
+
     return (
         <div className="min-h-screen bg-gray-100">
             {user ? <Navbar /> : <HomeNavbar />}
@@ -160,6 +169,12 @@ const Appointments = ({ user }) => {
                                     <p className="font-semibold text-gray-800 text-sm">
                                         <span className="font-bold text-indigo-800 text-md">Time:</span> {appointment.time}
                                     </p>
+                                    <button
+                                        onClick={() => handleGetDirections(appointment.locationId)}
+                                        className="w-full sm:w-3/4 mx-auto mt-2 bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-700"
+                                    >
+                                        <FontAwesomeIcon icon={faMapLocationDot} />
+                                    </button>
                                 </li>
                             ))}
                         </ul>

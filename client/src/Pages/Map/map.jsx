@@ -6,7 +6,8 @@ import { hospital, childcare, dentist, family, defaultpin } from "../../Componen
 import axios from "axios";
 import Navbar from "../../Components/Navbar/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarCheck } from "@fortawesome/free-regular-svg-icons";
+import { faCalendarCheck, faMap } from "@fortawesome/free-regular-svg-icons";
+import { faMapLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
 
 const Map = ({ user }) => {
     const [userLocation, setUserLocation] = useState(null);
@@ -79,6 +80,13 @@ const Map = ({ user }) => {
         return null;
     };
 
+    const handleGetDirections = (locationName) => {
+        // Generate a Google Maps URL with the location name
+        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(locationName)}`;
+        console.log(googleMapsUrl);
+        window.open(googleMapsUrl, "_blank"); // Open the URL in a new tab
+    };
+
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -102,22 +110,30 @@ const Map = ({ user }) => {
                             {filteredLocations.map((location, index) => (
                                 <li
                                     key={index}
-                                    className="p-6 border mx-auto rounded-xl shadow-md bg-gray-100 text-black w-96 content-center"
+                                    className="p-6 border mx-auto rounded-xl shadow-md bg-gray-100 text-black w-96 content-center cursor-pointer"
                                 >
                                     <strong className="block text-xl font-bold text-indigo-800 break-keep">{location.name}</strong>
                                     <span className="block text-indigo-800">{location.type}, {location.city}</span>
                                     <br />
-                                    <p className="text-sm text-gray-800 font-semibold">
+                                    <p className="text-sm text-gray-800 font-semibold break-keep">
                                         {location.description || "No additional details available."}
                                     </p><br />
-                                    <button
-                                        className={`w-full py-2 text-white rounded-md ${location.phone ? "bg-indigo-500 hover:bg-indigo-700" : "bg-indigo-500"
-                                            }`}
-                                        onClick={() => location.phone && window.open(`tel:${location.phone}`, "_self")}
-                                        disabled={!location.phone}
-                                    >
-                                        {location.phone ? `Call: ${location.phone}` : "No Phone Available"}
-                                    </button>
+                                    <div className="flex gap-2">
+                                        <button
+                                            className={`w-1/2 py-2 text-white rounded-md ${location.phone ? "bg-indigo-500 hover:bg-indigo-700" : "bg-indigo-500"
+                                                }`}
+                                            onClick={() => location.phone && window.open(`tel:${location.phone}`, "_self")}
+                                            disabled={!location.phone}
+                                        >
+                                            {location.phone ? <FontAwesomeIcon icon={faPhone} /> : "No Phone Available"}
+                                        </button>
+                                        <button
+                                            onClick={() => handleGetDirections(location.name)}
+                                            className="w-1/2 bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-700"
+                                        >
+                                            <FontAwesomeIcon icon={faMapLocationDot} />
+                                        </button>
+                                    </div>
                                     <a href="/appointments"><button className="mt-2 w-full py-2 rounded-md text-white bg-indigo-500 hover:bg-indigo-700"><FontAwesomeIcon icon={faCalendarCheck} /> Book Online</button></a>
                                 </li>
                             ))}
@@ -157,14 +173,22 @@ const Map = ({ user }) => {
                                     <h1 className="text-xl text-center font-bold text-indigo-800">{location.name}</h1>
                                     <p className="text-center text-md font-semibold">{location.type}, {location.city}</p>
                                     <p className="text-gray-800 text-xs text-center font-medium">{location.description || 'No additional information.'}</p>
-                                    <button
-                                        className={`w-full py-2 text-white rounded-md ${location.phone ? "bg-indigo-500 hover:bg-indigo-800" : "bg-gray-800"
-                                            }`}
-                                        onClick={() => location.phone && window.open(`tel:${location.phone}`, "_self")}
-                                        disabled={!location.phone}
-                                    >
-                                        {location.phone ? `Call: ${location.phone}` : "No Phone Available"}
-                                    </button>
+                                    <div className="flex gap-2">
+                                        <button
+                                            className={`w-1/2 py-2 text-white rounded-md ${location.phone ? "bg-indigo-500 hover:bg-indigo-700" : "bg-indigo-500"
+                                                }`}
+                                            onClick={() => location.phone && window.open(`tel:${location.phone}`, "_self")}
+                                            disabled={!location.phone}
+                                        >
+                                            {location.phone ? <FontAwesomeIcon icon={faPhone} /> : "No Phone Available"}
+                                        </button>
+                                        <button
+                                            onClick={() => handleGetDirections(location.name)}
+                                            className="w-1/2 bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-700"
+                                        >
+                                            <FontAwesomeIcon icon={faMapLocationDot} />
+                                        </button>
+                                    </div>
                                     <a href="/appointments"><button className="mt-2 w-full py-2 rounded-md text-white bg-indigo-500 hover:bg-indigo-700"><FontAwesomeIcon icon={faCalendarCheck} /> Book Online</button></a>
                                 </div>
                             </Popup>
