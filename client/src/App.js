@@ -14,6 +14,7 @@ import Profile from "./Pages/Profile/Profile";
 import Appointments from "./Pages/Appointments/appointments";
 import History from "./Pages/History/History";
 import BulkUpload from "./Pages/BulkUpload/BulkUpload";
+import BMICalculator from "./Pages/BMICalculator/BMICalculator";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -40,6 +41,7 @@ function App() {
           <Route path='/profile' element ={user ? <Profile user={user} /> : <Login/> } />
           <Route path='/appointments' element ={user ? <Appointments user={user} /> : <Login/> } />
           <Route path='/history' element ={user ? <History user={user} /> : <Login/> } />
+          <Route path='/bmicalculator' element ={user ? <BMICalculator user={user} /> : <Login/> } />
           <Route path='/bulk' element ={user ? <BulkUpload user={user} /> : <Login/> } />
           <Route path="/map" element={<Map user={user} />} />
           <Route path="/addlocation" element={<AddLocation />} />
