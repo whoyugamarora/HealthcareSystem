@@ -68,6 +68,28 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Bulk upload locations
+router.post("/bulk", async (req, res) => {
+    const locations = req.body.locations; // Expecting an array of location objects
+    if (!Array.isArray(locations) || locations.length === 0) {
+        return res.status(400).json({ message: "Locations array is required." });
+    }
+
+    try {
+        // Insert locations into MongoDB
+        const insertedLocations = await Location.insertMany(locations, { ordered: false }); // `ordered: false` allows skipping duplicates
+        res.status(201).json({ message: "Locations added successfully!", insertedLocations });
+    } catch (err) {
+        if (err.code === 11000) {
+            console.error("Duplicate entry detected:", err.message);
+            res.status(400).json({ message: "Duplicate entry detected. Added locations expect duplicates." });
+          } else {
+            console.error("Error adding locations:", err.message);
+            res.status(500).json({ message: "Failed to add locations." });
+          }
+    }
+});
+
 // Delete location by ID
 router.delete('/id/:id', async (req, res) => {
     try {
