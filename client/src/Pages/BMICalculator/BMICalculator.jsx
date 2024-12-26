@@ -3,6 +3,7 @@ import Navbar from '../../Components/Navbar/Navbar';
 import HomeNavbar from "../../Components/Navbar/HomeNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalculator } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const BMICalculator = ({ user }) => {
     const [weight, setWeight] = useState("");
@@ -11,29 +12,45 @@ const BMICalculator = ({ user }) => {
     const [category, setCategory] = useState("");
 
 
-    const CalculateBMI = (e) => {
+    const CalculateBMI = async (e) => {
         e.preventDefault();
 
         if (!weight || !height || weight <= 0 || height <= 0) {
             alert("Please enter valid weight and height!");
+            return;
         }
 
         // BMI formula: weight (kg) / [height (m)]^2
         const heightInMeters = height / 100; // Convert height to meters
         const bmiValue = (weight / (heightInMeters * heightInMeters)).toFixed(2);
         setBmi(bmiValue);
+        let categoryValue = "";
 
-        // Determine BMI category
-        if (bmiValue < 18.5 && bmiValue > 0 ) {
-            setCategory("Underweight");
+        if (bmiValue < 18.5 && bmiValue > 0) {
+            categoryValue = "Underweight";
         } else if (bmiValue >= 18.5 && bmiValue < 24.9) {
-            setCategory("Normal weight");
+            categoryValue = "Normal weight";
         } else if (bmiValue >= 25 && bmiValue < 29.9) {
-            setCategory("Overweight");
-        } else if (bmiValue >= 30 ) {
-            setCategory("Obesity");
+            categoryValue = "Overweight";
+        } else if (bmiValue >= 30) {
+            categoryValue = "Obesity";
         } else {
-            setCategory("No Result");
+            categoryValue = "No Result";
+        }
+        setCategory(categoryValue);
+
+        try {
+            await axios.post("http://localhost:5000/bmi", {
+                userId: user.uid,
+                weight: weight,
+                height: height,
+                bmi: bmiValue,
+                category: categoryValue,
+            });
+
+        } catch (err) {
+            console.error('Error uploading the BMI', err.message);
+            alert("Failed to save BMI. Please try again.");
         }
 
     };

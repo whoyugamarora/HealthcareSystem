@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const LocationRoutes = require('./routes/LocationRoutes')
 const AppointmentRoutes = require('./routes/AppointmentRoutes');
+const bmiRoutes = require('./routes/bmiRoutes');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 // API routes for photos
 app.use('/locations', LocationRoutes);
 app.use("/appointments", AppointmentRoutes);
+app.use("/bmi", bmiRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

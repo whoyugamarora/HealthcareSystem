@@ -3,7 +3,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import HomeNavbar from "../../Components/Navbar/HomeNavbar";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faCalendarCheck, faClockRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCalculator, faCalendarCheck, faClockRotateLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Profile = ({ user }) => {
     const [filteredAppointments, setfilteredAppointments] = useState([]);
@@ -54,8 +54,9 @@ const Profile = ({ user }) => {
                         <div>
                             <h1 className="text-2xl md:text-3xl font-bold mb-4">Services</h1>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 break-words">
-                                <a href="/appointments"><div className="bg-indigo-200 px-5 py-8 md:py-10 rounded-2xl shadow-md hover:bg-indigo-300 cursor-pointer font-semibold text-gray-700"><FontAwesomeIcon icon={faCalendarCheck} size="lg" /> Upcoming Appointments</div></a>
-                                <a href="/history"><div className="bg-indigo-200 px-5 py-8 md:py-10 rounded-2xl shadow-md hover:bg-indigo-300 cursor-pointer font-semibold text-gray-700"><FontAwesomeIcon icon={faClockRotateLeft} size="lg" /> View History</div></a>
+                                <a href="/appointments"><div className="w-full md:w-3/4 lg:w-full mx-auto bg-indigo-200 px-5 py-8 md:py-10 rounded-2xl shadow-md hover:bg-indigo-300 cursor-pointer font-semibold text-gray-700"><FontAwesomeIcon icon={faCalendarCheck} size="lg" /> Upcoming Appointments</div></a>
+                                <a href="/history"><div className="w-full md:w-3/4 lg:w-full mx-auto bg-indigo-200 px-5 py-8 md:py-10 rounded-2xl shadow-md hover:bg-indigo-300 cursor-pointer font-semibold text-gray-700"><FontAwesomeIcon icon={faClockRotateLeft} size="lg" /> View History</div></a>
+                                <a href="/bmicalculator"><div className="w-full md:w-3/4 lg:w-full mx-auto bg-indigo-200 px-5 py-8 md:py-10 rounded-2xl shadow-md hover:bg-indigo-300 cursor-pointer font-semibold text-gray-700"><FontAwesomeIcon icon={faCalculator} size="lg" /> BMI Calculator</div></a>
                             </div>
                         </div>
                         <div className="mt-8">
