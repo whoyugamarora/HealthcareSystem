@@ -84,6 +84,8 @@ const Appointments = ({ user }) => {
             console.error("Error booking appointment:", err.message);
             setError("Failed to book appointment. Please try again.");
         }
+
+        fetchAppointments();
     };
 
     const handleGetDirections = (locationName) => {

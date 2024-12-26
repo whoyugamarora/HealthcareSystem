@@ -4,8 +4,14 @@ const BMI = require('../models/bmi');
 
 // Fetch all appointments
 router.get("/", async (req, res) => {
+    const { userId } = req.query; // Expect `userId` as a query parameter
+
+    if (!userId) {
+        return res.status(400).json({ message: "User ID is required." });
+    }
+
     try {
-        const bmi = await BMI.find(); // Use async/await to query the database
+        const bmi = await BMI.find({userId}).sort({createdAt: -1}).limit(6); // Use async/await to query the database
         res.json(bmi);
     } catch (err) {
         console.error("Error fetching bmis:", err.message); // Log the error for debugging

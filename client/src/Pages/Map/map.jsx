@@ -14,6 +14,8 @@ const Map = ({ user }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [locations, setLocations] = useState([]); // All locations fetched from the backend
     const [filteredLocations, setFilteredLocations] = useState([]); // Locations filtered by search query
+    const [filterCategory, setFilterCategory] = useState(""); // Selected category filter
+    const [displayedLocations, setDisplayedLocations] = useState([]); // Locations filtered by search or category
     const defaultcoordinates = [49.049999, -122.316666];
 
     useEffect(() => {
@@ -48,6 +50,29 @@ const Map = ({ user }) => {
     useEffect(() => {
         fetchLocations();
     }, []);
+
+    // Filter locations based on search query or category
+    useEffect(() => {
+        const query = searchQuery.trim().toLowerCase();
+        let filtered = locations;
+
+        if (filterCategory) {
+            filtered = filtered.filter(
+                (location) => location.type.toLowerCase() === filterCategory.toLowerCase()
+            );
+        }
+
+        if (query) {
+            filtered = filtered.filter(
+                (location) =>
+                    location.name.toLowerCase().includes(query) ||
+                    location.city.toLowerCase().includes(query) ||
+                    (location.description && location.description.toLowerCase().includes(query))
+            );
+        }
+
+        setDisplayedLocations(filtered);
+    }, [searchQuery, filterCategory, locations]);
 
     const handleSearch = async (event) => {
         event.preventDefault(); // Prevent form submission from refreshing the page
@@ -103,6 +128,23 @@ const Map = ({ user }) => {
                     <button onClick={handleSearch} className="bg-gray-100 text-indigo-600 px-4 py-3 rounded-lg mt-4 ml-2 hover:bg-gray-300">
                         Search
                     </button>
+                    <div className="flex justify-center space-x-10 items-center p-6">
+                        <button onClick={() => setFilterCategory("Hospital")} className={`${filterCategory === "Hospital" ? 'text-yellow-400': 'text-white' }`}>
+                            <i className="fa-solid fa-hospital fa-xl"></i>
+                        </button>
+                        <button onClick={() => setFilterCategory("Dentist")} className={`${filterCategory === "Dentist" ? 'text-yellow-400': 'text-white' }`}>
+                            <i className="fa-solid fa-tooth fa-xl"></i>
+                        </button>
+                        <button onClick={() => setFilterCategory("Family")} className={`${filterCategory === "Family" ? 'text-yellow-400': 'text-white' }`}>
+                            <i className="fa-solid fa-user-doctor fa-xl"></i>
+                        </button>
+                        <button onClick={() => setFilterCategory("Childcare")} className={`${filterCategory === "Childcare" ? 'text-yellow-400': 'text-white' }`}>
+                            <i className="fa-solid fa-children fa-xl"></i>
+                        </button>
+                        <button onClick={() => setFilterCategory("")} className={`${filterCategory === "" ? 'text-yellow-400': 'text-white' }`}>
+                            <i className="fa-solid fa-map fa-xl"></i> All
+                        </button>
+                    </div>
                 </div>
                 <div className="flex-grow flex flex-col py-4 w-full md:w-1/2">
                     {filteredLocations.length > 0 ? (
@@ -154,7 +196,7 @@ const Map = ({ user }) => {
                         <Popup>You are Here!</Popup>
                     </Marker>
                     <PanToLocation center={filteredLocations.length > 0 ? [filteredLocations[0].latitude, filteredLocations[0].longitude] : defaultcoordinates} />
-                    {locations.map((location, index) => (
+                    {displayedLocations.map((location, index) => (
                         <Marker
                             key={index}
                             position={[location.latitude, location.longitude]}

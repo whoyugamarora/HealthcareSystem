@@ -10,7 +10,26 @@ const BMICalculator = ({ user }) => {
     const [height, setHeight] = useState("");
     const [bmi, setBmi] = useState(null);
     const [category, setCategory] = useState("");
+    const [userBmi, setUserBmi] = useState([]);
 
+    const fetchBmis = async () => {
+
+        try {
+            const response = await axios.get(`http://localhost:5000/bmi`, {
+                params: { userId: user.uid }, // Pass `userId` as a query parameter
+            });
+
+            setUserBmi(response.data);
+            console.log(response.data);
+
+        } catch (err) {
+            console.error("Error fetching bmis", err.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchBmis();
+    }, [user.uid]);
 
     const CalculateBMI = async (e) => {
         e.preventDefault();
@@ -29,7 +48,7 @@ const BMICalculator = ({ user }) => {
         if (bmiValue < 18.5 && bmiValue > 0) {
             categoryValue = "Underweight";
         } else if (bmiValue >= 18.5 && bmiValue < 24.9) {
-            categoryValue = "Normal weight";
+            categoryValue = "Normal";
         } else if (bmiValue >= 25 && bmiValue < 29.9) {
             categoryValue = "Overweight";
         } else if (bmiValue >= 30) {
@@ -40,7 +59,7 @@ const BMICalculator = ({ user }) => {
         setCategory(categoryValue);
 
         try {
-            await axios.post("http://localhost:5000/bmi", {
+            await axios.post(`http://localhost:5000/bmi`, {
                 userId: user.uid,
                 weight: weight,
                 height: height,
@@ -53,13 +72,20 @@ const BMICalculator = ({ user }) => {
             alert("Failed to save BMI. Please try again.");
         }
 
+         // Fetch updated BMI history after successfully adding the new BMI
+         fetchBmis();
+
+         // Clear input fields after calculation
+         setWeight("");
+         setHeight("");
+
     };
 
     return (
         <div>
             {user ? <Navbar /> : <HomeNavbar />}
-            <div className="flex flex-col lg:flex-row items-center justify-center">
-                <div className="w-full lg:w-1/2 p-4 mt-0 lg:py-8 mx-auto" style={{minHeight: "calc(100vh - 4rem)"}}>
+            <div className="flex flex-col lg:flex-row justify-center">
+                <div className="w-full lg:w-1/2 p-4 mt-0 lg:py-8 mx-auto">
                     <h1 className="mb-6 text-3xl font-extrabold text-indigo-700">BMI Calculator</h1>
                     <form className="max-w-md mx-auto p-4" onSubmit={CalculateBMI}>
                         <div className="flex flex-col mb-2">
@@ -82,13 +108,32 @@ const BMICalculator = ({ user }) => {
                     <div className="mt-2 p-4 flex justify-center">
                         {bmi && (
                             <div>
-                                <h2 className="text-2xl font-bold">Your BMI: <span className={`${bmi >= 25 ? "text-red-600" : "text-green-700"}` }>{bmi}</span></h2>
-                                <h3 className="text-2xl font-bold mt-2">Category: <span className={`${category === "Overweight" || category === "Obesity" ? "text-red-600" : "text-green-700"}` }>{category}</span></h3>
+                                <h2 className="text-2xl font-bold">Your BMI: <span className={`${bmi >= 25 ? "text-red-600" : "text-green-700"}`}>{bmi}</span></h2>
+                                <h3 className="text-2xl font-bold mt-2">Category: <span className={`${category === "Overweight" || category === "Obesity" ? "text-red-600" : "text-green-700"}`}>{category}</span></h3>
                             </div>
                         )}
                     </div>
                 </div>
-                <div className="w-1/2"></div>
+                <div className="w-full lg:w-1/2 p-4 mt-0 lg:py-8 mx-auto">
+                    <h1 className="mb-6 text-3xl font-extrabold text-indigo-700">BMI History</h1>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {userBmi.length > 0 ? (
+                            userBmi.map((fetchedbmi) =>
+                                <li className="p-6 flex flex-col gap-1 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-2xl text-left border border-indigo-300 bg-gradient-to-r from-indigo-100 to-indigo-200">
+                                    <p className="text-center font-bold text-indigo-800">{new Date(fetchedbmi.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                                    <p className="font-bold">Weight: <span className="font-normal">{fetchedbmi.weight}</span></p>
+                                    <p className="font-bold">Height: <span className="font-normal">{fetchedbmi.height}</span></p>
+                                    <p className="font-bold">BMI: <span className="font-normal">{fetchedbmi.bmi}</span></p>
+                                    <p className="font-bold">Category - <span className="font-normal">{fetchedbmi.category}</span></p>
+                                </li>
+
+                            )) :
+                            (<li className="col-span-1 md:col-span-2 lg:w-1/2 p-4 flex justify-center">
+                                <p>No BMI History</p>
+                            </li>)
+                        }
+                    </ul>
+                </div>
             </div>
 
         </div>

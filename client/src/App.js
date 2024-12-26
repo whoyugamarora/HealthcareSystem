@@ -13,7 +13,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Profile from "./Pages/Profile/Profile";
 import Appointments from "./Pages/Appointments/appointments";
 import History from "./Pages/History/History";
-import BulkUpload from "./Pages/BulkUpload/BulkUpload";
+import BulkUpload from "./Pages/Bulkupload/Bulkupload";
 import BMICalculator from "./Pages/BMICalculator/BMICalculator";
 
 function App() {
