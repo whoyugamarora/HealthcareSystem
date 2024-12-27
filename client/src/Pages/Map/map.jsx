@@ -135,7 +135,7 @@ const Map = ({ user }) => {
                         <button onClick={() => setFilterCategory("Dentist")} className={`${filterCategory === "Dentist" ? 'text-yellow-400': 'text-white' }`}>
                             <i className="fa-solid fa-tooth fa-xl"></i>
                         </button>
-                        <button onClick={() => setFilterCategory("Family")} className={`${filterCategory === "Family" ? 'text-yellow-400': 'text-white' }`}>
+                        <button onClick={() => setFilterCategory("Family Doctor")} className={`${filterCategory === "Family Doctor" ? 'text-yellow-400': 'text-white' }`}>
                             <i className="fa-solid fa-user-doctor fa-xl"></i>
                         </button>
                         <button onClick={() => setFilterCategory("Childcare")} className={`${filterCategory === "Childcare" ? 'text-yellow-400': 'text-white' }`}>
@@ -207,7 +207,7 @@ const Map = ({ user }) => {
                                         ? dentist
                                         : location.type === "Childcare"
                                             ? childcare
-                                            : location.type === "Doctor" ? family : defaultpin
+                                            : location.type === "Family Doctor" ? family : defaultpin
                             }
                         >
                             <Popup>
